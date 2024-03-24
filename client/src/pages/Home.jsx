@@ -1,37 +1,59 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
     const navigate = useNavigate();
-    const [cookies, removeCookie] = useCookies([]);
+    const [cookies, removeCookie] = useCookies(["token"]);
     const [username, setUsername] = useState("");
+
     useEffect(() => {
         const verifyCookie = async () => {
-            if (!cookies.token) {
-                navigate("/login");
-            }
-            const { data } = await axios.post(
-                "http://localhost:4000",
-                {},
-                { withCredentials: true }
-            );
-            const { status, user } = data;
-            setUsername(user);
-            return status
-                ? toast(`Hello ${user}`, {
+            try {
+                if (!cookies.token) {
+                    navigate("/login");
+                    return;
+                }
+                const response = await axios.post(
+                    "/api/verify", 
+                    {},
+                    { withCredentials: true }
+                );
+                const { status, user } = response.data;
+                if (status) {
+                    setUsername(user);
+                    toast.success(`Hello ${user}`, {
+                        position: "top-right",
+                    });
+                } else {
+                    removeCookie("token");
+                    navigate("/login");
+                    toast.error("Session expired. Please log in again.", {
+                        position: "top-right",
+                    });
+                }
+            } catch (error) {
+                console.error("Error while verifying token:", error);
+                // Handle unexpected errors, such as server errors or network issues
+                toast.error("An error occurred. Please try again later.", {
                     position: "top-right",
-                })
-                : (removeCookie("token"), navigate("/login"));
+                });
+            }
         };
         verifyCookie();
-    }, [cookies, navigate, removeCookie]);
-    const Logout = () => {
+    }, [cookies.token, navigate, removeCookie]);
+
+    const handleLogout = () => {
         removeCookie("token");
-        navigate("/signup");
+        navigate("/login");
+        toast.info("Logged out successfully.", {
+            position: "top-right",
+        });
     };
+
     return (
         <>
             <div className="home_page">
@@ -39,7 +61,7 @@ const Home = () => {
                     {" "}
                     Welcome <span>{username}</span>
                 </h4>
-                <button onClick={Logout}>LOGOUT</button>
+                <button onClick={handleLogout}>LOGOUT</button>
             </div>
             <ToastContainer />
         </>
