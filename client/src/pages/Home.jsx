@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -18,7 +18,7 @@ const Home = () => {
                     return;
                 }
                 const response = await axios.post(
-                    "/api/verify", 
+                    "/api/verify",
                     {},
                     { withCredentials: true }
                 );
@@ -62,6 +62,9 @@ const Home = () => {
                     Welcome <span>{username}</span>
                 </h4>
                 <button onClick={handleLogout}>LOGOUT</button>
+                <Link to="/reminders">
+                    <button>Reminders List</button>
+                </Link>
             </div>
             <ToastContainer />
         </>
