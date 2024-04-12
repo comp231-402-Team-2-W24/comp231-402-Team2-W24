@@ -66,7 +66,7 @@ const Home = () => {
                     <button>Reminders List</button>
                 </Link>
                 <Link to="/notes">
-                    <button>Notes</button>
+                    <button>Academic Record Notes</button>
                 </Link>
             </div>
             <ToastContainer />
