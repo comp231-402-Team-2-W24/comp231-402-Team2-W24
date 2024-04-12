@@ -6,6 +6,8 @@ require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const authRoute = require("./Routes/AuthRoute");
 const ReminderRoute = require("./Routes/ReminderRoute");
+const NotesRoute = require('./Routes/NotesRoute');
+
 const { MONGO_URL, PORT } = process.env;
 
 mongoose
@@ -33,3 +35,5 @@ app.use(express.json());
 
 app.use("/", authRoute);
 app.use("/reminders/", ReminderRoute);
+app.use("/notes/", NotesRoute);
+

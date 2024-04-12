@@ -207,9 +207,7 @@ li {
   border: 1px solid #dee2e6;
   padding: 10px;
   margin-bottom: 10px;
-  display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 button {
@@ -268,4 +266,83 @@ button:hover {
   height: 40px; 
   font-size: 18px; 
   padding: 5px;
+}
+
+.notes-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.notes-title {
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.new-note-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.new-note-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+}
+
+.add-note-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-note-button:hover {
+  background-color: #0056b3;
+}
+
+.note-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.note-item {
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.note-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #007bff;
+  transition: color 0.3s;
+}
+
+.note-actions button:hover {
+  color: #0056b3;
+}
+
+.note-edit-input {
+  flex-grow: 1;
+  margin-right: 10px;
+  padding: 5px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
 }

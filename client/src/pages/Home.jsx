@@ -18,7 +18,7 @@ const Home = () => {
                     return;
                 }
                 const response = await axios.post(
-                    "/api/verify",
+                    "http://localhost:4000/",
                     {},
                     { withCredentials: true }
                 );
@@ -64,6 +64,9 @@ const Home = () => {
                 <button onClick={handleLogout}>LOGOUT</button>
                 <Link to="/reminders">
                     <button>Reminders List</button>
+                </Link>
+                <Link to="/notes">
+                    <button>Notes</button>
                 </Link>
             </div>
             <ToastContainer />
