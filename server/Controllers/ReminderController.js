@@ -14,9 +14,10 @@ const getReminders = async (req, res) => {
 const addReminder = async (req, res) => {
     const reminder = new Reminder({
         title: req.body.text,
-        userId: '65fe78d5f02124783f6a84f0',
+        date: req.body.date,
+        userId: req.userId,
     });
-
+    
     try {
         const newReminder = await reminder.save();
         res.status(201).json(newReminder);
