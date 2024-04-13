@@ -6,6 +6,9 @@ const reminderSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    date: {
+        type: Date
+    },
     title: {
         type: String,
         required: [true, "Reminder title is required"],

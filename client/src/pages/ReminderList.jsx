@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const ReminderList = () => {
+    const navigate = useNavigate();
     const [reminders, setReminders] = useState([]);
     const [newReminder, setNewReminder] = useState('');
+    const [newReminderDate, setNewReminderDate] = useState('');
 
     useEffect(() => {
         fetchReminders();
@@ -32,27 +35,34 @@ const ReminderList = () => {
     const handleAddReminder = async (event) => {
         event.preventDefault();
         try {
-            await axios.post("http://localhost:4000/reminders/", { text: newReminder });
+            await axios.post("http://localhost:4000/reminders/",
+                { text: newReminder, date: newReminderDate });
             fetchReminders();
             setNewReminder('');
+            setNewReminderDate('');
         } catch (error) {
             console.error('Error adding reminder:', error);
         }
     };
     const [editingId, setEditingId] = useState(null);
     const [editingText, setEditingText] = useState('');
+    const [editingDate, setEditingDate] = useState(null);
 
-    const handleEditReminder = (id, text) => {
+    const handleEditReminder = (id, text, date) => {
         setEditingId(id);
         setEditingText(text);
+        let formattedDate = new Date(date)?.toISOString()?.split('T')[0];
+        setEditingDate(formattedDate);
     };
 
     const handleSaveReminder = async (id) => {
         try {
-            await axios.put(`http://localhost:4000/reminders/${id}`, { title: editingText });
+            await axios.put(`http://localhost:4000/reminders/${id}`,
+                { title: editingText, date: editingDate });
             fetchReminders();
             setEditingId(null);
             setEditingText('');
+            setEditingDate(null);
         } catch (error) {
             console.error('Error saving reminder:', error);
         }
@@ -71,39 +81,75 @@ const ReminderList = () => {
                         placeholder="New reminder"
                         required
                     />
+                    <input
+                        className="new-reminder-input-date"
+                        type="date"
+                        value={newReminderDate}
+                        onChange={e => setNewReminderDate(e.target.value)}
+                        placeholder="New reminder"
+                        required
+                    />
                     <button className="add-reminder-button" type="submit">Add Reminder</button>
                 </div>
             </form>
-            <ul>
-                {reminders.map((reminder) => (
-                    <li key={reminder._id}>
-                        {editingId === reminder._id ? (
-                            <>
-                                <input
-                                    type="text"
-                                    value={editingText}
-                                    onChange={e => setEditingText(e.target.value)}
-                                />
-                                <button onClick={() => handleSaveReminder(reminder._id)}>
-                                    Save
-                                </button>
-                            </>
-                        ) : (
-                            <div className="reminder-item">
-                                {reminder.title}
-                                <div className="reminder-actions">
-                                    <button onClick={() => handleEditReminder(reminder._id, reminder.title)}>
-                                        <FontAwesomeIcon icon={faPencilAlt} />
-                                    </button>
-                                    <button onClick={() => handleDeleteReminder(reminder._id)}>
-                                        <FontAwesomeIcon icon={faTrash} />
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                    </li>
-                ))}
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Reminder</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {reminders.map((reminder) => {
+                        let formattedDate = new Date(reminder.date)?.toISOString()?.split('T')[0];
+                        return (
+                            <tr key={reminder._id}>
+                                {editingId === reminder._id ? (
+                                    <>
+                                        <td>
+                                            <input
+                                                className="new-reminder-input"
+                                                type="text"
+                                                value={editingText}
+                                                onChange={e => setEditingText(e.target.value)}
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                className="new-reminder-input"
+                                                type="date"
+                                                value={editingDate}
+                                                onChange={e => setEditingDate(e.target.value)}
+                                            />
+                                        </td>
+                                        <td>
+                                            <button onClick={() => handleSaveReminder(reminder._id)}>
+                                                Save
+                                            </button>
+                                        </td>
+                                    </>
+                                ) : (
+                                    <>
+                                        <td>{reminder.title}</td>
+                                        <td>{formattedDate}</td>
+                                        <td className="reminder-actions">
+                                            <button onClick={() => handleEditReminder(reminder._id, reminder.title, reminder.date)}>
+                                                <FontAwesomeIcon icon={faPencilAlt} />
+                                            </button>
+                                            <button onClick={() => handleDeleteReminder(reminder._id)}>
+                                                <FontAwesomeIcon icon={faTrash} />
+                                            </button>
+                                        </td>
+                                    </>
+                                )}
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+            <button className="back-to-home-button" onClick={() => navigate("/")}>
+                <span className="arrow">&#8592;</span>Go to Home</button>
         </div>
     );
 };

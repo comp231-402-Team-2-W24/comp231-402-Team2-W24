@@ -17,3 +17,19 @@ module.exports.userVerification = (req, res) => {
         }
     })
 }
+
+module.exports.authorization = (req, res, next) => {
+    const token = req.cookies.token;
+    console.log("token", token)
+    if (!token) {
+        return res.sendStatus(403);
+    }
+    try {
+        const data = jwt.verify(token, process.env.TOKEN_KEY);
+        req.userId = data.id;
+        req.userRole = data.role;
+        return next();
+    } catch {
+        return res.sendStatus(403);
+    }
+};
