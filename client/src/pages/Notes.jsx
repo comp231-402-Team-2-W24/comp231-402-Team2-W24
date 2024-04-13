@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+const siteUrl = process.env.REACT_APP_SITE_URL;
 
 const Notes = () => {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Notes = () => {
 
     const fetchNotes = async () => {
         try {
-            const response = await axios.get("http://localhost:4000/notes/");
+            const response = await axios.get(`${siteUrl}:4000/notes/`);
             setNotes(response.data);
         } catch (error) {
             console.error('Error fetching notes:', error);
@@ -27,7 +28,7 @@ const Notes = () => {
 
     const handleDeleteNote = async (id) => {
         try {
-            await axios.delete(`http://localhost:4000/notes/${id}`);
+            await axios.delete(`${siteUrl}:4000/notes/${id}`);
             fetchNotes();
         } catch (error) {
             console.error('Error deleting note:', error);
@@ -37,7 +38,7 @@ const Notes = () => {
     const handleAddNote = async (event) => {
         event.preventDefault();
         try {
-            await axios.post("http://localhost:4000/notes/", { text: newNote });
+            await axios.post(`${siteUrl}:4000/notes/`, { text: newNote });
             fetchNotes();
             setNewNote('');
         } catch (error) {
@@ -52,7 +53,7 @@ const Notes = () => {
 
     const handleSaveNote = async () => {
         try {
-            await axios.put(`http://localhost:4000/notes/${editingId}`, { text: editingText });
+            await axios.put(`${siteUrl}:4000/notes/${editingId}`, { text: editingText });
             fetchNotes();
             setEditingId(null);
             setEditingText('');
