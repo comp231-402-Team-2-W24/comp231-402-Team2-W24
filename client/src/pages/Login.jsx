@@ -58,6 +58,14 @@ const Login = () => {
         });
     };
 
+    // Function to handle admin login
+    const handleAdminLogin = () => {
+        setInputValue({
+            email: "admin@admin.com",
+            password: "adminpassword",
+        });
+    };
+
     return (
         <div>
             <h2>Login Account</h2>
