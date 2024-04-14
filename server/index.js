@@ -8,7 +8,7 @@ const authRoute = require("./Routes/AuthRoute");
 const ReminderRoute = require("./Routes/ReminderRoute");
 const NotesRoute = require('./Routes/NotesRoute');
 
-const { MONGO_URL, PORT } = process.env;
+const { MONGO_URL, SERVER_PORT, REACT_APP_SITE_URL } = process.env;
 
 mongoose
     .connect(MONGO_URL, {
@@ -18,13 +18,13 @@ mongoose
     .then(() => console.log("MongoDB is  connected successfully"))
     .catch((err) => console.error(err));
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+app.listen(SERVER_PORT, () => {
+    console.log(`Server is listening on port ${SERVER_PORT}`);
 });
 
 app.use(
     cors({
-        origin: ["http://localhost:3000"],
+        origin: [`${REACT_APP_SITE_URL}:3000`],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true,
     })
