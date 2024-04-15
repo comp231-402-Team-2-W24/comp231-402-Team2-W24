@@ -19,7 +19,7 @@ const Notes = () => {
 
     const fetchNotes = async () => {
         try {
-            const response = await axios.get(`${siteUrl}:4000/notes/`);
+            const response = await axios.get(`${siteUrl}/notes/`);
             setNotes(response.data);
         } catch (error) {
             console.error('Error fetching notes:', error);
@@ -28,7 +28,7 @@ const Notes = () => {
 
     const handleDeleteNote = async (id) => {
         try {
-            await axios.delete(`${siteUrl}:4000/notes/${id}`);
+            await axios.delete(`${siteUrl}/notes/${id}`);
             fetchNotes();
         } catch (error) {
             console.error('Error deleting note:', error);
@@ -38,7 +38,7 @@ const Notes = () => {
     const handleAddNote = async (event) => {
         event.preventDefault();
         try {
-            await axios.post(`${siteUrl}:4000/notes/`, { text: newNote });
+            await axios.post(`${siteUrl}/notes/`, { text: newNote });
             fetchNotes();
             setNewNote('');
         } catch (error) {
@@ -53,7 +53,7 @@ const Notes = () => {
 
     const handleSaveNote = async () => {
         try {
-            await axios.put(`${siteUrl}:4000/notes/${editingId}`, { text: editingText });
+            await axios.put(`${siteUrl}/notes/${editingId}`, { text: editingText });
             fetchNotes();
             setEditingId(null);
             setEditingText('');

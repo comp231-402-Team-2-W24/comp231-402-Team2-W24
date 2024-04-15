@@ -18,7 +18,7 @@ const Home = () => {
                     return;
                 }
                 const response = await axios.post(
-                    `${siteUrl}:4000/`,
+                    `${siteUrl}/`,
                     {},
                     { withCredentials: true }
                 );
