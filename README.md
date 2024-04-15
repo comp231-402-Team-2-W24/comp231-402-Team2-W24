@@ -12,16 +12,13 @@ add below variables and their values inside `.env` file
 MONGO_URL = "mongodb://localhost:27017/noteflow"
 SERVER_PORT = 4000
 TOKEN_KEY = "neel_secret_key"
-REACT_APP_FRONT_END="http://localhost"
+REACT_APP_FRONT_END="http://localhost:3000"
 ```
 
 create a file with name `.env` inside `client` directory
 add below variables and their values inside `.env` file
 ```
-MONGO_URL = "mongodb://localhost:27017/noteflow"
-SERVER_PORT = 4000
-TOKEN_KEY = "neel_secret_key"
-REACT_APP_BE_URL="http://localhost"
+REACT_APP_BE_URL="http://localhost:4000"
 ```
 
 Open terminal 
