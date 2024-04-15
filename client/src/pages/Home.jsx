@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const siteUrl = process.env.REACT_APP_SITE_URL;
+const siteUrl = process.env.REACT_APP_BE_URL;
 const Home = () => {
     const navigate = useNavigate();
     const [cookies, removeCookie] = useCookies(["token"]);

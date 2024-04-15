@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-const siteUrl = process.env.REACT_APP_SITE_URL;
+const siteUrl = process.env.REACT_APP_BE_URL;
 
 const Signup = () => {
     const navigate = useNavigate();

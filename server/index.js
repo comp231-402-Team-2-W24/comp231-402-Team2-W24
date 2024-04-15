@@ -8,7 +8,7 @@ const authRoute = require("./Routes/AuthRoute");
 const ReminderRoute = require("./Routes/ReminderRoute");
 const NotesRoute = require('./Routes/NotesRoute');
 
-const { MONGO_URL, SERVER_PORT, REACT_APP_SITE_URL } = process.env;
+const { MONGO_URL, SERVER_PORT, REACT_APP_FRONT_END } = process.env;
 
 mongoose
     .connect(MONGO_URL, {
@@ -24,7 +24,7 @@ app.listen(SERVER_PORT, () => {
 
 app.use(
     cors({
-        origin: [`${REACT_APP_SITE_URL}:3000`],
+        origin: [`${REACT_APP_FRONT_END}`],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true,
     })
