@@ -17,7 +17,8 @@ const ReminderList = () => {
 
     const fetchReminders = async () => {
         try {
-            const response = await axios.get(`${siteUrl}/reminders/`);
+            const response = await axios.get(`${siteUrl}/reminders/`,
+            { withCredentials: true });
             setReminders(response.data);
         } catch (error) {
             console.error('Error fetching reminders:', error);
@@ -26,7 +27,8 @@ const ReminderList = () => {
 
     const handleDeleteReminder = async (id) => {
         try {
-            await axios.delete(`${siteUrl}/reminders/${id}`);
+            await axios.delete(`${siteUrl}/reminders/${id}`,
+            { withCredentials: true });
             fetchReminders();
         } catch (error) {
             console.error('Error deleting reminder:', error);
@@ -37,7 +39,8 @@ const ReminderList = () => {
         event.preventDefault();
         try {
             await axios.post(`${siteUrl}/reminders/`,
-                { text: newReminder, date: newReminderDate });
+                { text: newReminder, date: newReminderDate },
+                { withCredentials: true });
             fetchReminders();
             setNewReminder('');
             setNewReminderDate('');
@@ -59,7 +62,8 @@ const ReminderList = () => {
     const handleSaveReminder = async (id) => {
         try {
             await axios.put(`${siteUrl}/reminders/${id}`,
-                { title: editingText, date: editingDate });
+                { title: editingText, date: editingDate },
+                { withCredentials: true });
             fetchReminders();
             setEditingId(null);
             setEditingText('');

@@ -19,7 +19,8 @@ const Notes = () => {
 
     const fetchNotes = async () => {
         try {
-            const response = await axios.get(`${siteUrl}/notes/`);
+            const response = await axios.get(`${siteUrl}/notes/`,
+            { withCredentials: true });
             setNotes(response.data);
         } catch (error) {
             console.error('Error fetching notes:', error);
@@ -28,7 +29,8 @@ const Notes = () => {
 
     const handleDeleteNote = async (id) => {
         try {
-            await axios.delete(`${siteUrl}/notes/${id}`);
+            await axios.delete(`${siteUrl}/notes/${id}`,
+            { withCredentials: true });
             fetchNotes();
         } catch (error) {
             console.error('Error deleting note:', error);
@@ -38,7 +40,8 @@ const Notes = () => {
     const handleAddNote = async (event) => {
         event.preventDefault();
         try {
-            await axios.post(`${siteUrl}/notes/`, { text: newNote });
+            await axios.post(`${siteUrl}/notes/`, { text: newNote },
+            { withCredentials: true });
             fetchNotes();
             setNewNote('');
         } catch (error) {
@@ -53,7 +56,8 @@ const Notes = () => {
 
     const handleSaveNote = async () => {
         try {
-            await axios.put(`${siteUrl}/notes/${editingId}`, { text: editingText });
+            await axios.put(`${siteUrl}/notes/${editingId}`, { text: editingText },
+            { withCredentials: true });
             fetchNotes();
             setEditingId(null);
             setEditingText('');
